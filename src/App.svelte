@@ -5,9 +5,9 @@
 	//https://svelte-mui.vercel.app/
 	//Компонент DatePicker - для примера
 	import { Datefield } from "svelte-mui";
-	let format = "D.MM.YYYY";
-	//let date = "21.01.2019"; // String or
-	let date = new Date().toDateString(); // Date
+	let format = "DD.MM.YYYY";
+	//let date = "21.01.2019"; // Строка или дата
+	let date = new Date().toLocaleDateString(); //  .toDateString(); // Date
 
 	const onchange = ({ detail }) => {
 		console.log("onchange", detail);
@@ -23,20 +23,23 @@
 		}, 5000);
 		setTimeout(() => {
 			// переведёт промис в состояние fulfilled с результатом "result"
-			reject("Не Результат");
-		}, 5500);
+			//reject("Нет результата");
+			//или вызвать ошибку
+			reject(new Error("Ошибка. Нет результата."));
+		}, 4500);
 	});
 
-	promise.then(
-		(result) => {
-			// первая функция-обработчик - запустится при вызове resolve
-			lateVar = "Разрешенное значение: " + result;
-		},
-		(error) => {
-			// вторая функция - запустится при вызове reject
-			lateVar = "Rejected: " + error; // error - аргумент reject
-		}
-	);
+	//Раскоментируйте это
+	// promise.then(
+	// 	(result) => {
+	// 		// первая функция-обработчик - запустится при вызове resolve
+	// 		lateVar = "Разрешенное значение: " + result;
+	// 	},
+	// 	(error) => {
+	// 		// вторая функция - запустится при вызове reject
+	// 		lateVar = "Rejected: " + error; // error - аргумент reject
+	// 	}
+	// );
 </script>
 
 <main>
@@ -47,7 +50,8 @@
 	{:then data}
 		<h2>{data}</h2>
 		<h3>{lateVar}</h3>
-	{:catch}
+	{:catch data}
+		<h2>{data}</h2>
 		<h3>{lateVar}</h3>
 	{/await}
 
@@ -62,7 +66,7 @@
 	<p>
 		<Datefield
 			value={date}
-			label="A Special Day"
+			label="Выберите дату:"
 			locale="ru"
 			{format}
 			message={format}

@@ -23,6 +23,7 @@
     }
 </script>
 
+<!-- Раскоментируйте это! <div>{JSON.stringify(jdata, null, "\t")}</div> -->
 <div
     style="display:flex; justify-content:center;item-align:stretch;width:450px;margin:0 auto;"
 >
