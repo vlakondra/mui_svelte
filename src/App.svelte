@@ -1,6 +1,7 @@
 <script>
 	export let name;
 	import Api from "./Components/toapi.svelte";
+	import { ExpansionPanel, Checkbox, Icon } from "svelte-mui";
 
 	//https://svelte-mui.vercel.app/
 	//Компонент DatePicker - для примера
@@ -40,10 +41,20 @@
 	// 		lateVar = "Rejected: " + error; // error - аргумент reject
 	// 	}
 	// );
+	function onchage() {}
 </script>
 
 <main>
 	<h1>Hello {name}!</h1>
+
+	<ExpansionPanel name="Luke Skywalker " on:change={onchage}>
+		<div>
+			Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis
+			quod culpa et, dolores omnis, ipsum in perspiciatis porro ut nihil
+			molestiae molestias tenetur delectus velit! Inventore laborum rerum
+			at id?
+		</div>
+	</ExpansionPanel>
 
 	{#await promise}
 		<h1 style="color:darkblue">Подождите немного...</h1>

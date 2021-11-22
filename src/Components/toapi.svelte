@@ -1,11 +1,47 @@
 <script>
+    import { fade, fly } from "svelte/transition";
+    import { slide } from "svelte/transition";
     import { onMount } from "svelte";
+    import PrevNext from "./prev_next.svelte";
 
+    async function getPeoplePage(lnk) {
+        console.log("PP", lnk);
+        try {
+            loadPage = true;
+            const resp = await fetch(lnk);
+            jdata = await resp.json();
+
+            next_link = await jdata["next"];
+            prev_link = await jdata["previous"];
+            curr_page = await lnk.split("=")[1];
+            loadPage = await false;
+        } catch (e) {
+            console.log("Ошибка", e);
+        }
+    }
+    let loadPage = false;
     let jdata;
+    let next_link;
+    let prev_link;
+    let curr_page = 1;
     onMount(async () => {
         //1-й вариант
-        const resp = await fetch("https://swapi.dev/api/people");
-        jdata = await resp.json();
+        try {
+            const resp = await fetch("https://swapi.dev/api/people");
+            console.log("Resp", resp);
+            jdata = await resp.json();
+            next_link = await jdata["next"];
+            prev_link = await jdata["previous"];
+            console.log(
+                "111",
+                jdata,
+                (next_link = jdata["next"]),
+                (prev_link = jdata["previous"])
+            );
+            console.log("NP", next_link, prev_link);
+        } catch (e) {
+            console.log("e", e);
+        }
 
         //2-й вариант
         // jdata = await fetch("https://swapi.dev/api/people")
@@ -15,7 +51,7 @@
 
     let planet;
     function getPlanet(link) {
-        console.log("LINK", link);
+        // console.log("LINK", link);
         const handleClick = async () => {
             planet = await fetch(link).then((x) => x.json());
         };
@@ -23,26 +59,34 @@
     }
 </script>
 
-<!-- Раскоментируйте это! <div>{JSON.stringify(jdata, null, "\t")}</div> -->
 <div
-    style="display:flex; justify-content:center;item-align:stretch;width:450px;margin:0 auto;"
+    style="display:flex; justify-content:center;item-align:stretch;width:450px;margin:0 auto;min-height:500px"
 >
-    <div style="background:cornsilk;flex-grow:0.5">
+    <div style="background:cornsilk;flex-grow:0.5; ">
         {#if !jdata}
             <p>Ждите!!!</p>
         {:else}
-            {#each jdata.results as m}
-                {console.log("jdata", jdata)}
-                <h6>
-                    <!-- {console.log(m)} -->
-                    <span
-                        on:click={() => getPlanet(m.homeworld)}
-                        style="cursor:pointer">{m.name} -- Планета</span
-                    >
-                </h6>
+            <div>
+                <PrevNext getPage={getPeoplePage} {prev_link} {next_link} />
+            </div>
+
+            <div>Страница {curr_page}</div>
+            {#each jdata.results as m (m.name)}
+                {#key m.name}
+                    <h6 transition:slide>
+                        <!-- transition:slide in:fly={{ y: 100 }} -->
+                        <span
+                            on:click={() => getPlanet(m.homeworld)}
+                            style="cursor:pointer">{m.name} -- Планета</span
+                        >
+                    </h6>
+                {/key}
             {/each}
+
+            <PrevNext getPage={getPeoplePage} {prev_link} {next_link} />
         {/if}
     </div>
+
     <div style="background:coral;flex-grow:1">
         {#await planet}
             <h5>Wait!!!</h5>
