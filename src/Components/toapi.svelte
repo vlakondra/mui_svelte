@@ -24,21 +24,25 @@
     let next_link;
     let prev_link;
     let curr_page = 1;
+
+    let res_people = [];
+
     onMount(async () => {
         //1-й вариант
         try {
-            const resp = await fetch("https://swapi.dev/api/people");
-            console.log("Resp", resp);
-            jdata = await resp.json();
-            next_link = await jdata["next"];
-            prev_link = await jdata["previous"];
-            console.log(
-                "111",
-                jdata,
-                (next_link = jdata["next"]),
-                (prev_link = jdata["previous"])
-            );
-            console.log("NP", next_link, prev_link);
+            await getPeople("https://swapi.dev/api/people");
+            // const resp = await fetch("https://swapi.dev/api/people");
+            // console.log("Resp", resp);
+            // jdata = await resp.json();
+            // next_link = await jdata["next"];
+            // prev_link = await jdata["previous"];
+            // console.log(
+            //     "111",
+            //     jdata,
+            //     (next_link = jdata["next"]),
+            //     (prev_link = jdata["previous"])
+            // );
+            // console.log("NP", next_link, prev_link);
         } catch (e) {
             console.log("e", e);
         }
@@ -57,11 +61,36 @@
         };
         handleClick();
     }
+
+    const getPeople = async (req) => {
+        return await fetch(req)
+            .then(async (resp) => {
+                let json = await resp.json();
+                if (resp.ok) {
+                    console.log("json?", json.next);
+                    console.log("?", json.results);
+                    res_people.push(...json.results);
+                    if (json.next) {
+                        return await getPeople(json.next);
+                    }
+                }
+            })
+            .then(() => 123);
+    };
+
+    async function get_People() {
+        let rr = await getPeople("https://swapi.dev/api/people");
+        console.log("rr", rr, res_people);
+    }
 </script>
 
 <div
     style="display:flex; justify-content:center;item-align:stretch;width:450px;margin:0 auto;min-height:500px"
 >
+    <div>
+        <button on:click={get_People}>Recursion</button>
+    </div>
+
     <div style="background:cornsilk;flex-grow:0.5; ">
         {#if !jdata}
             <p>Ждите!!!</p>
