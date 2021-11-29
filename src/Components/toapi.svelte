@@ -30,19 +30,20 @@
     onMount(async () => {
         //1-й вариант
         try {
-            await getPeople("https://swapi.dev/api/people");
-            // const resp = await fetch("https://swapi.dev/api/people");
-            // console.log("Resp", resp);
-            // jdata = await resp.json();
-            // next_link = await jdata["next"];
-            // prev_link = await jdata["previous"];
-            // console.log(
-            //     "111",
-            //     jdata,
-            //     (next_link = jdata["next"]),
-            //     (prev_link = jdata["previous"])
-            // );
-            // console.log("NP", next_link, prev_link);
+            // await getPeople("https://swapi.dev/api/people");
+
+            const resp = await fetch("https://swapi.dev/api/people");
+            console.log("Resp", resp);
+            jdata = await resp.json();
+            next_link = await jdata["next"];
+            prev_link = await jdata["previous"];
+            console.log(
+                "111",
+                jdata,
+                (next_link = jdata["next"]),
+                (prev_link = jdata["previous"])
+            );
+            console.log("NP", next_link, prev_link);
         } catch (e) {
             console.log("e", e);
         }
@@ -84,13 +85,12 @@
     }
 </script>
 
+<div>
+    <button on:click={get_People}>All People</button>
+</div>
 <div
     style="display:flex; justify-content:center;item-align:stretch;width:450px;margin:0 auto;min-height:500px"
 >
-    <div>
-        <button on:click={get_People}>Recursion</button>
-    </div>
-
     <div style="background:cornsilk;flex-grow:0.5; ">
         {#if !jdata}
             <p>Ждите!!!</p>

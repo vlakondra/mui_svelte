@@ -1,6 +1,7 @@
 <script>
     import { Icon } from "svelte-mui";
     import Dart from "../svgs/dart.svelte";
+    import Prev from "../svgs/prev.svelte";
     export let prev_link;
     export let next_link;
     export let getPage;
@@ -10,7 +11,11 @@
 
 <!-- https://mothereff.in/html-entities -->
 <!-- http://svgicons.sparkk.fr/ -->
-<div />
+<div>
+    <Icon>
+        <svelte:component this={Prev} />
+    </Icon>
+</div>
 
 <div>
     <Icon pulse spin="True">
@@ -37,19 +42,27 @@
 </div>
 
 <style>
+    :global(.svg-icon) {
+        width: 1em;
+        height: 1em;
+        background: rgb(250, 236, 236);
+        fill: burlywood;
+        cursor: pointer;
+    }
+
     /* :global(svg) {
         width: 3.2em;
         height: 3.2em;
         fill: rgb(34, 165, 30);
     } */
-
+    /* 
     :global(.svg-icon) {
         width: 3em;
         height: 3em;
         fill: rgb(141, 110, 25);
         stroke-width: 0;
         background: black;
-    }
+    } */
 
     /* .svg-icon path,
     .svg-icon polygon,

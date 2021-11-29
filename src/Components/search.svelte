@@ -1,4 +1,6 @@
 <script>
+    //https://github.com/metonym/svelte-typeahead
+    //jsfiddle.net/vkondra/u9d01jtm/1/
     import { onMount } from "svelte";
 
     export let autofocus = false;

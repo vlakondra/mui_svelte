@@ -1,4 +1,6 @@
 # A Svelte template on Gitpod
+Рекурсия
+//https://codingwithmanny.medium.com/recursive-http-requests-in-javascript-44ea4beb74b5
 
 This is a [Svelte](https://svelte.dev) template configured for ephemeral development environments on [Gitpod](https://www.gitpod.io/).
 
