@@ -25,25 +25,24 @@
     let prev_link;
     let curr_page = 1;
 
-    let res_people = [];
+    $: res_people = [];
 
     onMount(async () => {
         //1-й вариант
         try {
-            // await getPeople("https://swapi.dev/api/people");
-
-            const resp = await fetch("https://swapi.dev/api/people");
-            console.log("Resp", resp);
-            jdata = await resp.json();
-            next_link = await jdata["next"];
-            prev_link = await jdata["previous"];
-            console.log(
-                "111",
-                jdata,
-                (next_link = jdata["next"]),
-                (prev_link = jdata["previous"])
-            );
-            console.log("NP", next_link, prev_link);
+            await getPeople("https://swapi.dev/api/people");
+            // const resp = await fetch("https://swapi.dev/api/people");
+            // console.log("Resp", resp);
+            // jdata = await resp.json();
+            // next_link = await jdata["next"];
+            // prev_link = await jdata["previous"];
+            // console.log(
+            //     "111",
+            //     jdata,
+            //     (next_link = jdata["next"]),
+            //     (prev_link = jdata["previous"])
+            // );
+            // console.log("NP", next_link, prev_link);
         } catch (e) {
             console.log("e", e);
         }
@@ -63,14 +62,41 @@
         handleClick();
     }
 
+    const GetName = async (link) => {
+        let json = await fetch(link).then((obj) => obj.json());
+        if (json.hasOwnProperty("name")) {
+            return await json.name;
+        } else {
+            return await json.title;
+        }
+    };
+
     const getPeople = async (req) => {
         return await fetch(req)
             .then(async (resp) => {
                 let json = await resp.json();
                 if (resp.ok) {
-                    console.log("json?", json.next);
-                    console.log("?", json.results);
+                    for (let obj of json.results) {
+                        for (let prop in obj) {
+                            if (Array.isArray(obj[prop])) {
+                                if (obj[prop].length > 0) {
+                                    for (let i = 0; i < obj[prop].length; i++) {
+                                        let res_name = await GetName(
+                                            obj[prop][i]
+                                        );
+                                        obj[prop][i] = {
+                                            link: obj[prop][i],
+                                            name: res_name,
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // console.log("!!!-???", json.results[0]);
                     res_people.push(...json.results);
+                    res_people = res_people;
                     if (json.next) {
                         return await getPeople(json.next);
                     }
@@ -80,8 +106,10 @@
     };
 
     async function get_People() {
-        let rr = await getPeople("https://swapi.dev/api/people");
-        console.log("rr", rr, res_people);
+        await getPeople("https://swapi.dev/api/people").then((x) => {
+            console.log("RP??", res_people);
+        });
+        // console.log("rr", rr, res_people);
     }
 </script>
 
@@ -92,25 +120,26 @@
     style="display:flex; justify-content:center;item-align:stretch;width:90%;margin:0 auto;min-height:500px"
 >
     <div style="background:cornsilk;flex-grow:0.5; ">
-        {#if !jdata}
+        {#if res_people.length < 1}
+            <!-- ///!jdata -->
             <p>Ждите!!!</p>
         {:else}
             <div>
                 <PrevNext getPage={getPeoplePage} {prev_link} {next_link} />
             </div>
 
-            <div>Страница {curr_page}</div>
-            {#each jdata.results as m (m.name)}
+            <!-- <div>Страница {curr_page}</div> -->
+            <!-- {#each jdata.results as m (m.name)}
                 {#key m.name}
                     <h6 transition:slide>
                         <!-- transition:slide in:fly={{ y: 100 }} -->
-                        <span
+            <!-- <span
                             on:click={() => getPlanet(m.homeworld)}
                             style="cursor:pointer">{m.name} -- Планета</span
                         >
                     </h6>
                 {/key}
-            {/each}
+            {/each} -->
 
             <PrevNext getPage={getPeoplePage} {prev_link} {next_link} />
         {/if}
