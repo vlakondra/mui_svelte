@@ -89,7 +89,7 @@
     <button on:click={get_People}>All People</button>
 </div>
 <div
-    style="display:flex; justify-content:center;item-align:stretch;width:450px;margin:0 auto;min-height:500px"
+    style="display:flex; justify-content:center;item-align:stretch;width:90%;margin:0 auto;min-height:500px"
 >
     <div style="background:cornsilk;flex-grow:0.5; ">
         {#if !jdata}
