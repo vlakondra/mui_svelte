@@ -38,7 +38,7 @@
 </script>
 
 <main>
-	<div>
+	<!-- <div>
 		<Typeahead data={data2} {extract} let:value let:result let:index>
 			<div style="color: red; font-weight: bold;">
 				{@html result.string}
@@ -48,10 +48,10 @@
 				No results found for {value}
 			</svelte:fragment>
 		</Typeahead>
-	</div>
+	</div> -->
 
 	<div>
-		<Search autofocus={true} {data} />
+		<!-- <Search autofocus={true} {data} /> -->
 	</div>
 	<p>
 		<Api />

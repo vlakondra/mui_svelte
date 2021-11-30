@@ -3,6 +3,7 @@
     import { slide } from "svelte/transition";
     import { onMount } from "svelte";
     import PrevNext from "./prev_next.svelte";
+    import Man from './man.svelte'
 
     async function getPeoplePage(lnk) {
         console.log("PP", lnk);
@@ -30,19 +31,20 @@
     onMount(async () => {
         //1-й вариант
         try {
-            await getPeople("https://swapi.dev/api/people");
-            // const resp = await fetch("https://swapi.dev/api/people");
-            // console.log("Resp", resp);
-            // jdata = await resp.json();
-            // next_link = await jdata["next"];
-            // prev_link = await jdata["previous"];
-            // console.log(
-            //     "111",
-            //     jdata,
-            //     (next_link = jdata["next"]),
-            //     (prev_link = jdata["previous"])
-            // );
-            // console.log("NP", next_link, prev_link);
+            // await getPeople("https://swapi.dev/api/people");
+
+            const resp = await fetch("https://swapi.dev/api/people");
+            console.log("Resp", resp);
+            jdata = await resp.json();
+            next_link = await jdata["next"];
+            prev_link = await jdata["previous"];
+            console.log(
+                "111",
+                jdata,
+                (next_link = jdata["next"]),
+                (prev_link = jdata["previous"])
+            );
+            console.log("NP", next_link, prev_link);
         } catch (e) {
             console.log("e", e);
         }
@@ -120,7 +122,7 @@
     style="display:flex; justify-content:center;item-align:stretch;width:90%;margin:0 auto;min-height:500px"
 >
     <div style="background:cornsilk;flex-grow:0.5; ">
-        {#if res_people.length < 1}
+        {#if !jdata}
             <!-- ///!jdata -->
             <p>Ждите!!!</p>
         {:else}
@@ -128,20 +130,20 @@
                 <PrevNext getPage={getPeoplePage} {prev_link} {next_link} />
             </div>
 
-            <!-- <div>Страница {curr_page}</div> -->
-            <!-- {#each jdata.results as m (m.name)}
+            <div>Страница {curr_page}</div>
+            {#each jdata.results as m (m.name)}
                 {#key m.name}
-                    <h6 transition:slide>
-                        <!-- transition:slide in:fly={{ y: 100 }} -->
-            <!-- <span
+                   <Man data={m} />
+                    <!-- <h6 transition:slide>
+                        <span
                             on:click={() => getPlanet(m.homeworld)}
                             style="cursor:pointer">{m.name} -- Планета</span
                         >
-                    </h6>
+                    </h6> -->
                 {/key}
-            {/each} -->
+            {/each}
 
-            <PrevNext getPage={getPeoplePage} {prev_link} {next_link} />
+            <!-- <PrevNext getPage={getPeoplePage} {prev_link} {next_link} /> -->
         {/if}
     </div>
 
