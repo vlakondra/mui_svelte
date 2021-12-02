@@ -18,12 +18,12 @@
 </div>
 
 <div>
-    <Icon pulse spin="True">
+    <!-- <Icon pulse spin="True">
         <svelte:component this={Dart} />
     </Icon>
     <Icon size="86" color={col}>
         <svelte:component this={Dart} />
-    </Icon>
+    </Icon> -->
 
     <span style="font-size:0.95em;">
         <button
