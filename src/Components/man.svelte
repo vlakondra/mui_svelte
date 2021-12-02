@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import { slide,fade, fly } from "svelte/transition";
+    import { ExpansionPanel } from "svelte-mui";
+    import { slide, fade, fly } from "svelte/transition";
 
     export let data;
     let manfilms = [];
@@ -22,11 +23,16 @@
             return await json.title;
         }
     };
+    const onchage = ({ detail }) => {
+        console.log(detail);
+    };
 </script>
 
 <div transition:fade>
-    {data.name}
-    {#each manfilms as mf}
-        <h6 transition:fade>{mf.name}</h6>
-    {/each}
+    <ExpansionPanel name={data.name} on:change={onchage}>
+        Films
+        {#each manfilms as mf}
+            <h6 transition:fade>{mf.name}</h6>
+        {/each}
+    </ExpansionPanel>
 </div>
