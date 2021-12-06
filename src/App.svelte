@@ -1,7 +1,11 @@
 <script>
-	import Api from "./Components/toapi.svelte";
+	import { onMount } from "svelte";
+	//import Api from "./Components/toapi.svelte";
 	import Search from "./Components/search.svelte";
-	import Typeahead from "svelte-typeahead";
+	//import Typeahead from "svelte-typeahead";
+	import Sections from "./Components/section_select.svelte";
+	import Content from "./Components/section_content.svelte";
+	import { section_url } from "./Components/store.js";
 
 	import { ExpansionPanel, Checkbox, Icon } from "svelte-mui";
 
@@ -10,59 +14,72 @@
 	//https://svelte-mui.vercel.app/
 	//https://svelte-recipes.netlify.app/testing/
 
-	const data = [
-		"Bare Metal Server",
-		"Blockchain Platform",
-		"Db2 Warehouse",
-		"Db2",
-		"Metrics Server",
-		"Node.js",
-		"Virtual Machine",
-		"Virtual Private Server",
-	];
+	// let section_link;
 
-	const data2 = [
-		{ state: "California" },
-		{ state: "North Carolina" },
-		{ state: "North Dakota" },
-		{ state: "South Carolina" },
-		{ state: "South Dakota" },
-		{ state: "Michigan" },
-		{ state: "Tennessee" },
-		{ state: "Nevada" },
-		{ state: "New Hampshire" },
-		{ state: "New Jersey" },
-	];
+	// section_url.subscribe((value) => {
+	// 	section_link = value;
+	// });
 
-	const extract = (item) => item.state;
+	let selected = "https://swapi.dev/api/films/";
+	section_url.update((n) => selected);
 </script>
 
 <main>
-	<!-- <div>
-		<Typeahead data={data2} {extract} let:value let:result let:index>
-			<div style="color: red; font-weight: bold;">
-				{@html result.string}
-				{index}
+	<div class="container">
+		<div class="controls">
+			<div>
+				<Sections def={selected} />
 			</div>
-			<svelte:fragment slot="no-results">
-				No results found for {value}
-			</svelte:fragment>
-		</Typeahead>
-	</div> -->
 
-	<div>
-		<!-- <Search autofocus={true} {data} /> -->
+			<div>
+				<input type="search" />
+			</div>
+		</div>
+
+		<article id="sections">
+			<Content />
+		</article>
 	</div>
-	<p>
-		<Api />
-	</p>
+
+	<!-- <Api /> -->
 </main>
 
 <style>
+	.container {
+		display: grid;
+		grid-template-areas:
+			"gap1 head gap2"
+			"off1 content off"
+			"footer footer footer";
+		grid-template-rows: 80px 1fr 100px;
+		grid-template-columns: 3% 1fr 3%;
+		grid-gap: 5px;
+		height: 600px;
+	}
+
+	.controls {
+		grid-area: head;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 0 20px;
+		align-items: center;
+		background-color: coral;
+	}
+
+	#sections {
+		grid-area: content;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
 	main {
-		text-align: center;
 		padding: 1em;
 		max-width: 100%;
 		margin: 0 auto;
+		border: 1px solid gray;
 	}
 </style>

@@ -3,7 +3,7 @@
     import { slide } from "svelte/transition";
     import { onMount } from "svelte";
     import PrevNext from "./prev_next.svelte";
-    import Man from './man.svelte'
+    import Man from "./man.svelte";
 
     async function getPeoplePage(lnk) {
         console.log("PP", lnk);
@@ -133,13 +133,8 @@
             <div>Страница {curr_page}</div>
             {#each jdata.results as m (m.name)}
                 {#key m.name}
-                   <Man data={m} />
-                    <!-- <h6 transition:slide>
-                        <span
-                            on:click={() => getPlanet(m.homeworld)}
-                            style="cursor:pointer">{m.name} -- Планета</span
-                        >
-                    </h6> -->
+                    <!-- <Man data={m} /> -->
+                    <svelte:component this={Man} data={m} />
                 {/key}
             {/each}
 
