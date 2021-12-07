@@ -45,10 +45,10 @@
             .then(() => res_people);
     };
 
-    section_url.subscribe(async (value) => {
+    section_url.subscribe(async (url) => {
         res_people.length = 0;
-        if (value) {
-            await getPeople(value);
+        if (url) {
+            await getPeople(url);
         }
     });
 </script>

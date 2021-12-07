@@ -14,6 +14,10 @@
 	//https://svelte-mui.vercel.app/
 	//https://svelte-recipes.netlify.app/testing/
 
+	//https://gridbyexample.com/
+	//https://tproger.ru/articles/7-osnovnyh-ponjatij-css-grid-layout-s-primerami-kotorye-pomogut-nachat-rabotu-s-gridami/
+	//https://grid.layoutit.com/
+
 	// let section_link;
 
 	// section_url.subscribe((value) => {
