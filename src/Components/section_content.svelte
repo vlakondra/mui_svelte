@@ -57,7 +57,10 @@
     {#each res_people as item, i}
         <div style="width:300px;height:200px;background:aqua;margin:1px">
             {#each Object.entries(item) as [k, v]}
-                {k}{v}
+                <div>
+                    <div style="display:inline-block">{k}</div>
+                    <div style="display:inline-block">{v}</div>
+                </div>
             {/each}
         </div>
     {/each}
