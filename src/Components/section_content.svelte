@@ -11,7 +11,7 @@
         }
     };
 
-    const getPeople = async (req) => {
+    const getSection = async (req) => {
         return await fetch(req)
             .then(async (resp) => {
                 let json = await resp.json();
@@ -38,7 +38,7 @@
                     res_people = res_people;
                     console.log("!!!-???", res_people);
                     if (json.next) {
-                        return await getPeople(json.next);
+                        return await getSection(json.next);
                     }
                 }
             })
@@ -48,7 +48,7 @@
     section_url.subscribe(async (url) => {
         res_people.length = 0;
         if (url) {
-            await getPeople(url);
+            await getSection(url);
         }
     });
 </script>
