@@ -59,6 +59,7 @@
 		grid-template-columns: 3% 1fr 3%;
 		grid-gap: 5px;
 		height: 600px;
+		overflow: auto;
 	}
 
 	.controls {
