@@ -5,8 +5,8 @@
 
     export let autofocus = false;
     export let data = [];
-
     let input = undefined;
+    
     let value = "";
 
     onMount(() => {
