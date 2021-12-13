@@ -87,16 +87,27 @@
                 visible = true;
             });
     };
+
+    const ttt = (d) => {
+        console.log(typeof d);
+        if (d) {
+            if (d.includes("http")) {
+                return `<a href=${d}>${d}</a>`;
+            } else {
+                return `<span>${d}</span`;
+            }
+        }
+    };
 </script>
 
 <Dialog width="450" bind:visible>
     <div slot="title">{dial_data.name}</div>
-    <div style="display:flex;justify-content:center; flex-direction:column">
+    <div style="display:flex; flex-direction:column">
         {#each Object.entries({ ...dial_data }) as [k, v]}
             {#if !Array.isArray(v)}
-                <div style="display:flex;justify-content:flex-start">
-                    <div style="margin-right:10px"><strong>{k}</strong></div>
-                    <div style="margin-left:10px">{v}</div>
+                <div style="display:flex">
+                    <div style="width:130px"><strong>{k}</strong></div>
+                    <div style="">{@html ttt(v)}</div>
                 </div>
             {/if}
         {/each}
