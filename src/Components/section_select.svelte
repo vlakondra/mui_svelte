@@ -1,5 +1,5 @@
 <script>
-    import { section_url } from "./store.js";
+    import { section_url, is_run } from "./store.js";
 
     const sections = [
         { kind: "films", url: "https://swapi.dev/api/films/" },
@@ -17,7 +17,12 @@
     };
 </script>
 
-<select bind:value={selected} on:change={onSelect} on:blur={null}>
+<select
+    bind:value={selected}
+    on:change={onSelect}
+    on:blur={null}
+    disabled={$is_run == true}
+>
     {#each sections as section}
         <option value={section.url} selected={section.kind == def}>
             {section.kind}

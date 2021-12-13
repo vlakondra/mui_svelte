@@ -1,7 +1,6 @@
 <script>
     export let data;
     export let dialog;
-    console.log("films", data);
     import { Menu, Menuitem, Button, Icon } from "svelte-mui";
 
     let fields = ["title", "opening_crawl", "producer", "release_date"];
@@ -9,6 +8,7 @@
     const onMenuItemClick = (link) => {
         dialog(link);
     };
+    let _finded = "A New Hope";
 </script>
 
 <div
@@ -20,7 +20,10 @@
                 <div style="width:90px; font-weight:600">
                     {k}:
                 </div>
-                <div style="width:390px;max-height:360px;margin-left:10px">
+                <div
+                    class={v === _finded ? "finded" : ""}
+                    style="width:390px;max-height:360px;margin-left:10px"
+                >
                     {v}
                 </div>
             </div>
@@ -39,7 +42,6 @@
                         >
                             <span>{k}</span>
                         </Button>
-                        <!-- <div style="inline-block">{k}</div> -->
                     </div>
 
                     {#each v as item}
@@ -52,3 +54,12 @@
         {/each}
     </div>
 </div>
+
+<style>
+    .finded {
+        background-color: red;
+        color: rgb(244, 244, 250);
+        font-weight: 900;
+        letter-spacing: 3px;
+    }
+</style>
