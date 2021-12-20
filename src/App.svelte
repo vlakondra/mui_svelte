@@ -1,10 +1,11 @@
 <script>
 	import { onMount } from "svelte";
 	//import Api from "./Components/toapi.svelte";
-	import Search from "./Components/search.svelte";
+	// import Search from "./Components/search.svelte";
 	//import Typeahead from "svelte-typeahead";
 	import Sections from "./Components/section_select.svelte";
 	import Content from "./Components/section_content.svelte";
+	import Search from "./Components/section_search.svelte";
 	import { section_url } from "./Components/store.js";
 
 	import { ExpansionPanel, Checkbox, Icon } from "svelte-mui";
@@ -35,9 +36,10 @@
 				<Sections def={selected} />
 			</div>
 
-			<div>
+			<Search/>
+			<!-- <div>
 				<input type="search" />
-			</div>
+			</div> -->
 		</div>
 
 		<article id="sections">

@@ -2,7 +2,7 @@
     import Films from "./films.svelte";
     import Other from "./other.svelte";
     import { Dialog, Icon } from "svelte-mui";
-    import { section_url, is_run } from "./store.js";
+    import { section_url, is_run, section_data } from "./store.js";
 
     let datas = {
         films: { data: [], comp: Films },
@@ -51,6 +51,7 @@
                     curr_data.push(...json.results);
                     //console.log("!!!-???", curr_data, datas);
                     curr_data = curr_data;
+                    section_data.set(curr_data)
 
                     if (json.next) {
                         return await getSection(json.next);
@@ -64,6 +65,7 @@
         let section = url.split("/")[4];
         curr_data = datas[section]["data"];
         curr_comp = datas[section]["comp"];
+        section_data.set(curr_data)
 
         if (url && curr_data.length == 0) {
             await getSection(url).then((r) => {

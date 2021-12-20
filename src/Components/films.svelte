@@ -2,17 +2,24 @@
     export let data;
     export let dialog;
     import { Menu, Menuitem, Button, Icon } from "svelte-mui";
+    import { finded } from "./store.js";
 
     let fields = ["title", "opening_crawl", "producer", "release_date"];
 
     const onMenuItemClick = (link) => {
         dialog(link);
     };
-    let _finded = "A New Hope";
+
+    let _finded;
+    finded.subscribe((fnd) => {
+        console.log("fnd", fnd);
+        _finded = fnd;
+    });
+    
 </script>
 
 <div
-    style="width:45%;min-height:220px;font:menu;padding:1em;background:#99ffd5;margin:3px;border:1px solid gray"
+    style="width:45%;height:260px;font:menu;padding:1em;background:#99ffd5;margin:3px;border:1px solid gray"
 >
     {#each Object.entries({ ...data }) as [k, v]}
         {#if !Array.isArray(v) & fields.includes(k)}
