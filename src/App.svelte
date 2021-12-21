@@ -25,7 +25,7 @@
 	// 	section_link = value;
 	// });
 
-	let selected = "https://swapi.dev/api/films/";
+	let selected = "https://swapi.dev/api/vehicles/";
 	section_url.update((n) => selected);
 </script>
 
