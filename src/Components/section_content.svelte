@@ -14,9 +14,11 @@
     };
     let curr_data;
     let curr_comp;
+    var reqCount=0;
 
     const GetName = async (link) => {
         let json = await fetch(link).then((obj) => obj.json());
+        reqCount+=1
         if (json.hasOwnProperty("name")) {
             return await json.name;
         } else {
@@ -25,9 +27,11 @@
     };
     const getSection = async (req) => {
         is_run.set(true);
+        reqCount=0
 
         return await fetch(req)
             .then(async (resp) => {
+                reqCount+=1
                 let json = await resp.json();
                 if (resp.ok) {
                     for (let obj of json.results) {
@@ -100,6 +104,8 @@
             }
         }
     };
+
+    
 </script>
 
 <Dialog width="450" bind:visible>
@@ -121,5 +127,5 @@
         <svelte:component this={curr_comp} data={item} dialog={openDialog} />
     {/each}
 {:else}
-    <h3>Wait</h3>
+    <h3>Wait{reqCount}</h3>
 {/if}
