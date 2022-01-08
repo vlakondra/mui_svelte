@@ -10,6 +10,8 @@
 
 	import { ExpansionPanel, Checkbox, Icon } from "svelte-mui";
 
+	import "bulma/css/bulma.css";
+
 	//https://github.com/metonym/svelte-typeahead
 	//http://svgicons.sparkk.fr/
 	//https://svelte-mui.vercel.app/
@@ -36,7 +38,7 @@
 				<Sections def={selected} />
 			</div>
 
-			<Search/>
+			<Search />
 			<!-- <div>
 				<input type="search" />
 			</div> -->
@@ -76,11 +78,11 @@
 
 	#sections {
 		grid-area: content;
-		display: flex;
+		/* display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-direction: row;
-		flex-wrap: wrap;
+		flex-wrap: wrap; */
 	}
 
 	main {

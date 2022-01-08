@@ -1,7 +1,8 @@
 <script>
+    import { Button } from "svelma";
     export let data;
     export let dialog;
-    import { Menu, Menuitem, Button, Icon } from "svelte-mui";
+    import { Menu, Menuitem, Icon } from "svelte-mui";
     import { finded } from "./store.js";
 
     let fields = ["title", "opening_crawl", "producer", "release_date"];
@@ -15,7 +16,6 @@
         console.log("fnd", fnd);
         _finded = fnd;
     });
-    
 </script>
 
 <div

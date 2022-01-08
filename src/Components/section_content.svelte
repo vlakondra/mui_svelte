@@ -14,11 +14,13 @@
     };
     let curr_data;
     let curr_comp;
-    var reqCount=0;
+    var reqCount = 0;
+
+    let item_portion = 3;
 
     const GetName = async (link) => {
         let json = await fetch(link).then((obj) => obj.json());
-        reqCount+=1
+        reqCount += 1;
         if (json.hasOwnProperty("name")) {
             return await json.name;
         } else {
@@ -27,11 +29,11 @@
     };
     const getSection = async (req) => {
         is_run.set(true);
-        reqCount=0
+        reqCount = 0;
 
         return await fetch(req)
             .then(async (resp) => {
-                reqCount+=1
+                reqCount += 1;
                 let json = await resp.json();
                 if (resp.ok) {
                     for (let obj of json.results) {
@@ -55,7 +57,7 @@
                     curr_data.push(...json.results);
                     //console.log("!!!-???", curr_data, datas);
                     curr_data = curr_data;
-                    section_data.set(curr_data)
+                    section_data.set(curr_data);
 
                     if (json.next) {
                         return await getSection(json.next);
@@ -69,7 +71,7 @@
         let section = url.split("/")[4];
         curr_data = datas[section]["data"];
         curr_comp = datas[section]["comp"];
-        section_data.set(curr_data)
+        section_data.set(curr_data);
 
         if (url && curr_data.length == 0) {
             await getSection(url).then((r) => {
@@ -95,8 +97,8 @@
     };
 
     const ttt = (d) => {
-        console.log(typeof d);
-        if (d) {
+        console.log("D", d, typeof d);
+        if (d && !Number.isInteger(d)) {
             if (d.includes("http")) {
                 return `<a href=${d}>${d}</a>`;
             } else {
@@ -104,28 +106,51 @@
             }
         }
     };
-
-    
 </script>
 
-<Dialog width="450" bind:visible>
-    <div slot="title">{dial_data.name}</div>
-    <div style="display:flex; flex-direction:column">
-        {#each Object.entries({ ...dial_data }) as [k, v]}
-            {#if !Array.isArray(v)}
-                <div style="display:flex">
+<Dialog width="500" bind:visible>
+    <div slot="title">
+        {dial_data.hasOwnProperty("name") ? dial_data.name : dial_data.title}
+    </div>
+    <div class="box content is-small">
+        <div style="display:flex; flex-direction:column">
+            {#each Object.entries({ ...dial_data }) as [k, v]}
+                {#if !Array.isArray(v)}
+                    <div class="columns">
+                        <div class="column is-half minify">
+                            <strong>{k}</strong>
+                        </div>
+                        <div class="column is-half minify">{@html ttt(v)}</div>
+                    </div>
+
+                    <!-- <div style="display:flex">
                     <div style="width:130px"><strong>{k}</strong></div>
                     <div style="">{@html ttt(v)}</div>
-                </div>
-            {/if}
-        {/each}
+                </div> -->
+                {/if}
+            {/each}
+        </div>
     </div>
 </Dialog>
 
 {#if curr_data.length}
-    {#each curr_data as item, i}
-        <svelte:component this={curr_comp} data={item} dialog={openDialog} />
+    {#each { length: Math.ceil(curr_data.length / item_portion) } as x, j}
+        <div class="columns is-desctop">
+            {#each curr_data.slice(j * item_portion, j * item_portion + item_portion) as item, i}
+                <div class="column is-one-third">
+                    <svelte:component
+                        this={curr_comp}
+                        data={item}
+                        dialog={openDialog}
+                    />
+                </div>
+            {/each}
+        </div>
     {/each}
+
+    <!-- {#each curr_data as item, i}
+        <svelte:component this={curr_comp} data={item} dialog={openDialog} />
+    {/each} -->
 {:else}
     <h3>Wait{reqCount}</h3>
 {/if}
