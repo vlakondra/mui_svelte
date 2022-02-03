@@ -11,6 +11,7 @@
 	import { ExpansionPanel, Checkbox, Icon } from "svelte-mui";
 
 	import "bulma/css/bulma.css";
+	import { Button } from 'svelma'
 
 	//https://github.com/metonym/svelte-typeahead
 	//http://svgicons.sparkk.fr/
@@ -32,6 +33,15 @@
 </script>
 
 <main>
+<p>
+<span class="icon-text">
+  <span class="icon">
+    <i class="fas fa-home"></i>
+  </span>
+  <span>Home</span>
+</span>
+</p>
+<Button type="is-primary" style="color:$black">???</Button>
 	<div class="container">
 		<div class="controls">
 			<div>

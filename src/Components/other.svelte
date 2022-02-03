@@ -21,7 +21,7 @@
     {#each Object.entries({ ...data }) as [k, v]}
         {#if !Array.isArray(v)}
             <div class="columns is-desctop">
-                <div class="column minify is-half ">
+                <div class="column minify is-half">
                     <strong>{k}</strong>
                 </div>
                 <div class="column minify is-half">{v}</div>

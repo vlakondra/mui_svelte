@@ -1,0 +1,5 @@
+{
+    "editor.autoClosingBrackets": "always",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+}
