@@ -1,7 +1,7 @@
 import App from './testApp.svelte';
 
 const app = new App({
-	target: document.body,
+	target: document.getElementById("ursei-asu-content"),
 	props: {
 		// name: 'Promise'
 	}
